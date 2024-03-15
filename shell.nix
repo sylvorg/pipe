@@ -1,4 +1,5 @@
 with import <nixpkgs> { };
+with lib;
 let
   pipe =
     { buildPythonPackage, beartype, more-itertools, poetry-core, pytest, rich }:
@@ -7,10 +8,7 @@ let
       version = "1.0.0.0";
       src = ./.;
       format = "pyproject";
-      nativeBuildInputs = [ poetry-core ];
+      nativeBuildInputs = toList poetry-core;
       propagatedNativeBuildInputs = [ beartype more-itertools pytest rich ];
     };
-in mkShell {
-  buildInputs = [ (python311Packages.callPackage pipe { }) fish ];
-  shellHook = "exec fish";
-}
+in mkShell { buildInputs = toList (python311Packages.callPackage pipe { }); }

@@ -1,3 +1,25 @@
-# Install
+* Install
 
-~pip install git+https://github.com/sylvorg/pipe.git~
+** Nix
+
+If you have ~nix~, you can do one of two things:
+
+1. Clone this repository, then run:
+
+#+begin_src sh
+nix-shell --run pytest
+#+end_src
+
+2. Or, directly run:
+
+#+begin_src sh
+nix-shell -E 'import (builtins.fetchurl "https://raw.githubusercontent.com/sylvorg/pipe/main/shell.nix")' --run pytest
+#+end_src
+
+** Python Virtual Environment
+
+Otherwise, install this package in a python virtual environment using:
+
+#+begin_src sh
+pip install git+https://github.com/sylvorg/pipe.git
+#+end_src
