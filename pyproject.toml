@@ -11,7 +11,7 @@ include = [
 
 [tool.poetry.dependencies]
 python = "^3.10"
-beartype = "*"
+beartype = { git = "https://github.com/beartype/beartype.git", rev = "a342229ded98ac10d410ce9101a0941f685704d5" }
 more-itertools = "*"
 pytest = "*"
 rich = "*"
