@@ -2,7 +2,7 @@ import operator
 from collections.abc import Callable
 from functools import wraps, reduce
 from more_itertools import collapse
-from typing import Any, Unpack
+from typing import Any
 
 
 def flatten(*args):
@@ -14,7 +14,7 @@ class PipeMeta(type):
     def wrap(cls: "PipeMeta", b: Callable) -> Callable:
         def wrapper(a: Callable):
             @wraps(a)
-            def wrapped(*args: Unpack[Any], **kwargs: Unpack[Any]):
+            def wrapped(*args, **kwargs) -> Any:
                 return b(a(*args, **kwargs))
 
             return wrapped
@@ -29,7 +29,7 @@ class Pipe(metaclass=PipeMeta):
     def __wrap__(self: "Pipe", b: Callable, a: Callable) -> Callable:
         return self.__class__.wrap(b)(a)
 
-    def __call__(self: "Pipe", *args: Unpack[Any], **kwargs: Unpack[Any]) -> Any:
+    def __call__(self: "Pipe", *args, **kwargs) -> Any:
         return self.func(*args, **kwargs)
 
     def __or__(self: "Pipe", other: Callable) -> "Pipe":
@@ -62,7 +62,7 @@ class Pipe(metaclass=PipeMeta):
         return self
 
 
-def pipe(*funcs: Unpack[Callable]) -> Pipe:
+def pipe(*funcs) -> Pipe:
     funcs: list[Callable] = flatten(funcs)
     if funcs:
         init: Pipe = Pipe(funcs[0])
