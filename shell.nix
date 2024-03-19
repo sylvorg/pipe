@@ -23,4 +23,4 @@ let
         rich
       ];
     };
-in mkShell { buildInputs = toList (python312Packages.callPackage pipe { }); }
+in mkShell { buildInputs = toList (python311Packages.callPackage pipe { }); }
